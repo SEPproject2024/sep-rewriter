@@ -352,7 +352,7 @@ const styles: Record<string, CSSProperties> = {
     color: "#8A847A",
     textDecoration: "none",
     borderBottom: "1px solid #CEC8BE",
-    paddingBottom: 1,
+    padding: "12px 0",
     cursor: "pointer",
   },
 
