@@ -72,8 +72,6 @@ const SYSTEM_PROMPT = `你是一個念頭改寫工具。使用者輸入一個困
 
 只回傳改寫後的一句話（問句），不要有任何其他文字、標點符號以外的東西。不要加引號包裹。`;
 
-const client = new Anthropic();
-
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -86,6 +84,14 @@ export async function POST(request: Request) {
     if (thought.length > 500) {
       return NextResponse.json({ error: "輸入太長了，請簡短一點" }, { status: 400 });
     }
+
+    const apiKey = process.env.ANTHROPIC_API_KEY;
+    if (!apiKey) {
+      console.error("ANTHROPIC_API_KEY is not set");
+      return NextResponse.json({ error: "伺服器設定有誤" }, { status: 500 });
+    }
+
+    const client = new Anthropic({ apiKey });
 
     const message = await client.messages.create({
       model: "claude-sonnet-4-6-20250131",
@@ -105,8 +111,9 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json({ text });
-  } catch (err) {
-    console.error("Rewrite API error:", err);
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("Rewrite API error:", message);
     return NextResponse.json({ error: "連線出了點問題，請再試一次。" }, { status: 500 });
   }
 }
