@@ -87,3 +87,20 @@ textarea:focus {
   color: #5c5650;
   border-bottom-color: #aaa49a;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .rack-focus {
+    animation: none;
+    opacity: 1;
+    filter: none;
+  }
+  .fade-in {
+    animation: none;
+    opacity: 1;
+  }
+  .btn-primary,
+  .btn-ghost,
+  .cta-link {
+    transition: none;
+  }
+}
