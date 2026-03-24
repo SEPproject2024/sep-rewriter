@@ -2,8 +2,19 @@
 
 import { useState, useRef, useEffect, CSSProperties } from "react";
 
+const FOOTER_LINES = [
+  "每個念頭都值得被溫柔地翻一面看看",
+  "被困住的時候，也許只是少看了一個角度",
+  "念頭沒有對錯，只是有時候可以再看一眼",
+  "你不需要改變想法，只是多一個角度陪你",
+  "卡住的念頭，輕輕轉一下，也許就鬆了",
+];
+
 export default function ThoughtRewriter() {
   const [input, setInput] = useState("");
+  const [footerLine] = useState(() =>
+    FOOTER_LINES[Math.floor(Math.random() * FOOTER_LINES.length)]
+  );
   const [result, setResult] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -182,7 +193,7 @@ export default function ThoughtRewriter() {
 
         {/* Footer — only when no result */}
         {!result && !loading && (
-          <p style={styles.footer}>改寫只是換一個角度看事情</p>
+          <p style={styles.footer}>{footerLine}</p>
         )}
       </div>
     </div>
