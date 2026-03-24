@@ -287,7 +287,7 @@ const styles: Record<string, CSSProperties> = {
     fontWeight: 300,
   },
   submitBtn: {
-    padding: "9px 24px",
+    padding: "12px 24px",
     fontSize: 14,
     fontFamily: "var(--font-sans), 'Noto Sans TC', sans-serif",
     fontWeight: 500,
@@ -329,7 +329,7 @@ const styles: Record<string, CSSProperties> = {
     alignItems: "center",
   },
   resetBtn: {
-    padding: "7px 14px",
+    padding: "10px 14px",
     fontFamily: "var(--font-sans), 'Noto Sans TC', sans-serif",
     fontSize: 12,
     fontWeight: 400,
