@@ -88,7 +88,7 @@ export default function ThoughtRewriter() {
       <div className="page-container">
         {/* Logo */}
         <div className="logo-mark anim-rise anim-delay-1">
-          <Image src="/icon.png" alt="微亮" width={52} height={52} priority />
+          <Image src="/logo-white.png" alt="微亮計畫" width={64} height={64} priority />
         </div>
 
         {/* Title */}

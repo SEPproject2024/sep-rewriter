@@ -91,15 +91,14 @@ html, body {
 /* === Logo === */
 .logo-mark { margin-bottom: 2.6rem; }
 .logo-mark img {
-  width: 52px; height: 52px; object-fit: contain;
-  filter: invert(1) brightness(0.85) sepia(0.2);
+  width: 64px; height: 64px; object-fit: contain;
 }
 
 /* === Title === */
 .title-area { text-align: center; margin-bottom: 1.4rem; }
 .main-title {
   font-family: var(--font-serif), 'Noto Serif TC', serif;
-  font-weight: 400; font-size: 2rem;
+  font-weight: 400; font-size: 1.7rem;
   letter-spacing: 0.15em; color: var(--text-primary);
 }
 
@@ -109,7 +108,7 @@ html, body {
 }
 .tagline p {
   font-family: var(--font-serif), 'Noto Serif TC', serif;
-  font-size: 0.95rem; font-weight: 300;
+  font-size: 1rem; font-weight: 300;
   color: var(--text-secondary); line-height: 1.9;
   letter-spacing: 0.04em;
 }
@@ -303,8 +302,8 @@ html, body {
 /* === Responsive === */
 @media (max-width: 600px) {
   .page-container { padding: 2rem 1.2rem; }
-  .main-title { font-size: 1.6rem; letter-spacing: 0.1em; }
-  .tagline p { font-size: 0.88rem; }
+  .main-title { font-size: 1.4rem; letter-spacing: 0.1em; }
+  .tagline p { font-size: 0.92rem; }
   .input-wrapper { padding: 1.2rem; }
   .result-card { padding: 1.2rem; }
 }
