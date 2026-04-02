@@ -75,6 +75,8 @@ export default function ThoughtRewriter() {
     setTimeout(() => textareaRef.current?.focus(), 100);
   };
 
+  const hasResult = !!result || loading;
+
   return (
     <>
       {/* Ambient background */}
@@ -86,23 +88,23 @@ export default function ThoughtRewriter() {
       <div className="texture" />
 
       <div className="page-container">
-        {/* Logo */}
-        <div className="logo-mark anim-rise anim-delay-1">
+        {/* Logo — collapses when result is shown */}
+        <div className={`logo-mark anim-rise anim-delay-1 ${hasResult ? "collapsed" : ""}`}>
           <Image src="/logo-white.png" alt="微亮計畫" width={64} height={64} priority />
         </div>
 
-        {/* Title */}
-        <div className="title-area anim-rise anim-delay-2">
+        {/* Title — stays visible but shrinks */}
+        <div className={`title-area anim-rise anim-delay-2 ${hasResult ? "compact" : ""}`}>
           <h1 className="main-title">念頭改寫</h1>
         </div>
 
-        {/* Tagline */}
-        <div className="tagline anim-rise anim-delay-3">
+        {/* Tagline — collapses when result is shown */}
+        <div className={`tagline anim-rise anim-delay-3 ${hasResult ? "collapsed" : ""}`}>
           <p>同一個念頭，另一個角度<br />也許就另一個感覺</p>
         </div>
 
-        {/* Invitation */}
-        <div className="invitation anim-rise anim-delay-4">
+        {/* Invitation — collapses when result is shown */}
+        <div className={`invitation anim-rise anim-delay-4 ${hasResult ? "collapsed" : ""}`}>
           <p>那個最近一直在轉的念頭<br />寫下來就好，不用修飾</p>
         </div>
 

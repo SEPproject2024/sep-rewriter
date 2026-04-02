@@ -290,6 +290,29 @@ html, body {
 }
 .brand-footer a:hover { opacity: 0.8; }
 
+/* === Result-state collapse: hide header elements to center result === */
+.collapsed {
+  max-height: 0 !important;
+  opacity: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  overflow: hidden;
+  transition: max-height 0.6s ease, opacity 0.4s ease, margin 0.6s ease, padding 0.6s ease;
+  pointer-events: none;
+}
+
+/* Ensure collapsible elements have a max-height set for transition to work */
+.logo-mark { max-height: 120px; transition: max-height 0.6s ease, opacity 0.4s ease, margin 0.6s ease; }
+.tagline { max-height: 120px; transition: max-height 0.6s ease, opacity 0.4s ease, margin 0.6s ease; }
+.invitation { max-height: 120px; transition: max-height 0.6s ease, opacity 0.4s ease, margin 0.6s ease; }
+
+/* Title stays but shrinks */
+.title-area { transition: margin 0.6s ease, font-size 0.6s ease; }
+.title-area.compact { margin-bottom: 0.8rem; }
+.title-area.compact .main-title { font-size: 1.2rem; letter-spacing: 0.1em; }
+
 /* === Reduced motion === */
 @media (prefers-reduced-motion: reduce) {
   .rack-focus { animation: none; opacity: 1; filter: none; }
