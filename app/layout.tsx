@@ -5,7 +5,7 @@ import "./globals.css";
 const notoSerifTC = Noto_Serif_TC({
   variable: "--font-serif",
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["300", "400", "500", "600"],
   display: "swap",
 });
 
@@ -17,8 +17,8 @@ const notoSansTC = Noto_Sans_TC({
 });
 
 export const metadata: Metadata = {
-  title: "念頭改寫 — SEP Rewriter",
-  description: "寫下一個你覺得一直在想的念頭，我們會改寫一個新的給你",
+  title: "念頭改寫｜微亮",
+  description: "同一個念頭，另一個角度，也許就另一個感覺",
 };
 
 export const viewport: Viewport = {
