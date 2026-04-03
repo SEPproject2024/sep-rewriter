@@ -100,7 +100,7 @@ export default function ThoughtRewriter() {
 
         {/* Tagline — collapses when result is shown */}
         <div className={`tagline anim-rise anim-delay-3 ${hasResult ? "collapsed" : ""}`}>
-          <p>同一個念頭，另一個角度<br />也許就另一個感覺</p>
+          <p>同一個念頭，另一個角度<br />也許就另一個感受</p>
         </div>
 
         {/* Invitation — collapses when result is shown */}

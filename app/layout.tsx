@@ -18,7 +18,7 @@ const notoSansTC = Noto_Sans_TC({
 
 export const metadata: Metadata = {
   title: "念頭改寫｜微亮",
-  description: "同一個念頭，另一個角度，也許就另一個感覺",
+  description: "同一個念頭，另一個角度，也許就另一個感受",
 };
 
 export const viewport: Viewport = {
