@@ -6,6 +6,7 @@ import Image from "next/image";
 export default function ThoughtRewriter() {
   const [input, setInput] = useState("");
   const [result, setResult] = useState<string | null>(null);
+  const [previousResponses, setPreviousResponses] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [revealed, setRevealed] = useState(false);
@@ -30,8 +31,7 @@ export default function ThoughtRewriter() {
     }
   }, [result]);
 
-  const handleSubmit = async () => {
-    if (!input.trim() || loading) return;
+  const callRewrite = async (thought: string, prev: string[]) => {
     setLoading(true);
     setError(null);
     setResult(null);
@@ -41,7 +41,7 @@ export default function ThoughtRewriter() {
       const res = await fetch("/api/rewrite", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ thought: input.trim() }),
+        body: JSON.stringify({ thought, previousResponses: prev }),
       });
 
       const data = await res.json();
@@ -51,6 +51,7 @@ export default function ThoughtRewriter() {
       }
 
       setResult(data.text);
+      setPreviousResponses([...prev, data.text]);
       setTimeout(() => setRevealed(true), 60);
     } catch (err) {
       console.error(err);
@@ -58,6 +59,17 @@ export default function ThoughtRewriter() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSubmit = () => {
+    if (!input.trim() || loading) return;
+    setPreviousResponses([]);
+    callRewrite(input.trim(), []);
+  };
+
+  const handleRetry = () => {
+    if (!input.trim() || loading) return;
+    callRewrite(input.trim(), previousResponses);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -70,6 +82,7 @@ export default function ThoughtRewriter() {
   const handleReset = () => {
     setInput("");
     setResult(null);
+    setPreviousResponses([]);
     setError(null);
     setRevealed(false);
     setTimeout(() => textareaRef.current?.focus(), 100);
@@ -185,16 +198,20 @@ export default function ThoughtRewriter() {
                 看看哪個說法讓你比較鬆。
               </div>
             </div>
-            <button
-              className="try-again"
-              onClick={handleReset}
+            <div
+              className="result-actions"
               style={{
                 opacity: revealed ? 1 : 0,
                 transition: "opacity 0.5s ease 1.1s",
               }}
             >
-              ← 換一個念頭
-            </button>
+              <button className="try-again" onClick={handleReset}>
+                ← 換一個念頭
+              </button>
+              <button className="retry-btn" onClick={handleRetry}>
+                換一句 ↻
+              </button>
+            </div>
           </div>
         )}
 

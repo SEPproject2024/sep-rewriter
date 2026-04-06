@@ -245,16 +245,36 @@ html, body {
   font-size: 0.78rem; color: var(--text-muted); line-height: 1.7;
 }
 
-/* === Try again button === */
+/* === Result action buttons === */
+.result-actions {
+  display: flex; align-items: center; gap: 1rem;
+  margin-top: 1.2rem;
+}
+
 .try-again {
   display: inline-flex; align-items: center; gap: 0.4rem;
-  margin-top: 1.2rem; background: transparent; border: none;
+  background: transparent; border: none;
   color: var(--text-secondary);
   font-family: var(--font-sans), 'Noto Sans TC', sans-serif;
   font-size: 0.82rem; cursor: pointer;
   transition: color 0.3s ease; padding: 0;
 }
 .try-again:hover { color: var(--accent-warm); }
+
+.retry-btn {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  background: transparent;
+  border: 1px solid rgba(196,149,106,0.25);
+  border-radius: 100px; padding: 0.4rem 1rem;
+  color: var(--accent-warm);
+  font-family: var(--font-sans), 'Noto Sans TC', sans-serif;
+  font-size: 0.82rem; font-weight: 400;
+  cursor: pointer; transition: all 0.3s ease;
+}
+.retry-btn:hover {
+  background: var(--accent-soft);
+  border-color: rgba(196,149,106,0.4);
+}
 
 /* === Rack focus animation (kept from v1) === */
 @keyframes rackFocus {
