@@ -3,10 +3,21 @@
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 
+const CONTEXT_TAGS = [
+  { id: "work", emoji: "💼", label: "工作壓力" },
+  { id: "relationship", emoji: "💑", label: "感情困擾" },
+  { id: "self-doubt", emoji: "🪞", label: "自我懷疑" },
+  { id: "direction", emoji: "🧭", label: "方向迷茫" },
+] as const;
+
+type ContextTagId = (typeof CONTEXT_TAGS)[number]["id"] | null;
+
 export default function ThoughtRewriter() {
   const [input, setInput] = useState("");
   const [result, setResult] = useState<string | null>(null);
   const [previousResponses, setPreviousResponses] = useState<string[]>([]);
+  const [attemptNumber, setAttemptNumber] = useState(1);
+  const [contextTag, setContextTag] = useState<ContextTagId>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [revealed, setRevealed] = useState(false);
@@ -31,17 +42,26 @@ export default function ThoughtRewriter() {
     }
   }, [result]);
 
-  const callRewrite = async (thought: string, prev: string[]) => {
+  const callRewrite = async (thought: string, prev: string[], attempt: number) => {
     setLoading(true);
     setError(null);
     setResult(null);
     setRevealed(false);
 
+    const tagLabel = contextTag
+      ? CONTEXT_TAGS.find((t) => t.id === contextTag)?.label
+      : undefined;
+
     try {
       const res = await fetch("/api/rewrite", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ thought, previousResponses: prev }),
+        body: JSON.stringify({
+          thought,
+          previousResponses: prev,
+          attemptNumber: attempt,
+          contextTag: tagLabel,
+        }),
       });
 
       const data = await res.json();
@@ -52,6 +72,7 @@ export default function ThoughtRewriter() {
 
       setResult(data.text);
       setPreviousResponses([...prev, data.text]);
+      setAttemptNumber(attempt + 1);
       setTimeout(() => setRevealed(true), 60);
     } catch (err) {
       console.error(err);
@@ -64,12 +85,13 @@ export default function ThoughtRewriter() {
   const handleSubmit = () => {
     if (!input.trim() || loading) return;
     setPreviousResponses([]);
-    callRewrite(input.trim(), []);
+    setAttemptNumber(1);
+    callRewrite(input.trim(), [], 1);
   };
 
   const handleRetry = () => {
     if (!input.trim() || loading) return;
-    callRewrite(input.trim(), previousResponses);
+    callRewrite(input.trim(), previousResponses, attemptNumber);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -83,9 +105,14 @@ export default function ThoughtRewriter() {
     setInput("");
     setResult(null);
     setPreviousResponses([]);
+    setAttemptNumber(1);
     setError(null);
     setRevealed(false);
     setTimeout(() => textareaRef.current?.focus(), 100);
+  };
+
+  const toggleTag = (id: ContextTagId) => {
+    setContextTag((prev) => (prev === id ? null : id));
   };
 
   const hasResult = !!result || loading;
@@ -101,24 +128,37 @@ export default function ThoughtRewriter() {
       <div className="texture" />
 
       <div className="page-container">
-        {/* Logo — collapses when result is shown */}
+        {/* Logo */}
         <div className={`logo-mark anim-rise anim-delay-1 ${hasResult ? "collapsed" : ""}`}>
           <Image src="/logo-white.png" alt="微亮計畫" width={64} height={64} priority />
         </div>
 
-        {/* Title — stays visible but shrinks */}
+        {/* Title */}
         <div className={`title-area anim-rise anim-delay-2 ${hasResult ? "compact" : ""}`}>
           <h1 className="main-title">念頭改寫</h1>
         </div>
 
-        {/* Tagline — collapses when result is shown */}
+        {/* Tagline */}
         <div className={`tagline anim-rise anim-delay-3 ${hasResult ? "collapsed" : ""}`}>
           <p>同一個念頭，另一個角度<br />也許就另一個感受</p>
         </div>
 
-        {/* Invitation — collapses when result is shown */}
+        {/* Invitation */}
         <div className={`invitation anim-rise anim-delay-4 ${hasResult ? "collapsed" : ""}`}>
           <p>那個最近一直在轉的念頭<br />寫下來就好，不用修飾</p>
+        </div>
+
+        {/* Context tags */}
+        <div className={`context-tags anim-rise anim-delay-5 ${hasResult ? "collapsed" : ""}`}>
+          {CONTEXT_TAGS.map((tag) => (
+            <button
+              key={tag.id}
+              className={`tag-pill ${contextTag === tag.id ? "tag-active" : ""}`}
+              onClick={() => toggleTag(tag.id)}
+            >
+              {tag.emoji} {tag.label}
+            </button>
+          ))}
         </div>
 
         {/* Input */}
@@ -215,7 +255,7 @@ export default function ThoughtRewriter() {
           </div>
         )}
 
-        {/* Philosophy — only when idle */}
+        {/* Philosophy */}
         {!result && !loading && (
           <div className="philosophy anim-rise anim-delay-6">
             <div className="divider-line" />

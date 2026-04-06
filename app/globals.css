@@ -122,6 +122,35 @@ html, body {
   color: var(--text-muted); font-weight: 300;
 }
 
+/* === Context tags === */
+.context-tags {
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+  justify-content: center;
+  max-width: 520px; margin-bottom: 1.2rem;
+  max-height: 60px;
+  transition: max-height 0.6s ease, opacity 0.4s ease, margin 0.6s ease;
+}
+
+.tag-pill {
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: 100px; padding: 0.35rem 0.9rem;
+  color: var(--text-muted);
+  font-family: var(--font-sans), 'Noto Sans TC', sans-serif;
+  font-size: 0.75rem; font-weight: 300;
+  cursor: pointer; transition: all 0.25s ease;
+  white-space: nowrap;
+}
+.tag-pill:hover {
+  border-color: rgba(196,149,106,0.2);
+  color: var(--text-secondary);
+}
+.tag-active {
+  border-color: rgba(196,149,106,0.4);
+  color: var(--accent-warm);
+  background: var(--accent-soft);
+}
+
 /* === Input area === */
 .input-area { width: 100%; max-width: 520px; }
 
