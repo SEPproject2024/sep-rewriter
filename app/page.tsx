@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import Image from "next/image";
 
 const CONTEXT_TAGS = [
   { id: "work", emoji: "💼", label: "工作壓力" },
@@ -128,28 +127,23 @@ export default function ThoughtRewriter() {
       <div className="texture" />
 
       <div className="page-container">
-        {/* Logo */}
-        <div className={`logo-mark anim-rise anim-delay-1 ${hasResult ? "collapsed" : ""}`}>
-          <Image src="/logo-white.png" alt="微亮計畫" width={64} height={64} priority />
-        </div>
-
         {/* Title */}
-        <div className={`title-area anim-rise anim-delay-2 ${hasResult ? "compact" : ""}`}>
+        <div className={`title-area anim-rise anim-delay-1 ${hasResult ? "compact" : ""}`}>
           <h1 className="main-title">念頭改寫</h1>
         </div>
 
         {/* Tagline */}
-        <div className={`tagline anim-rise anim-delay-3 ${hasResult ? "collapsed" : ""}`}>
+        <div className={`tagline anim-rise anim-delay-2 ${hasResult ? "collapsed" : ""}`}>
           <p>同一個念頭，另一個角度<br />也許就另一個感受</p>
         </div>
 
         {/* Invitation */}
-        <div className={`invitation anim-rise anim-delay-4 ${hasResult ? "collapsed" : ""}`}>
+        <div className={`invitation anim-rise anim-delay-3 ${hasResult ? "collapsed" : ""}`}>
           <p>那個最近一直在轉的念頭<br />寫下來就好，不用修飾</p>
         </div>
 
         {/* Context tags */}
-        <div className={`context-tags anim-rise anim-delay-5 ${hasResult ? "collapsed" : ""}`}>
+        <div className={`context-tags anim-rise anim-delay-4 ${hasResult ? "collapsed" : ""}`}>
           {CONTEXT_TAGS.map((tag) => (
             <button
               key={tag.id}
@@ -162,7 +156,7 @@ export default function ThoughtRewriter() {
         </div>
 
         {/* Input */}
-        <div className="input-area anim-rise anim-delay-5">
+        <div className="input-area anim-rise anim-delay-4">
           <div className="input-wrapper">
             <textarea
               ref={textareaRef}
@@ -257,7 +251,7 @@ export default function ThoughtRewriter() {
 
         {/* Philosophy */}
         {!result && !loading && (
-          <div className="philosophy anim-rise anim-delay-6">
+          <div className="philosophy anim-rise anim-delay-5">
             <div className="divider-line" />
             <p>念頭沒有對錯<br />只是有時候可以換個方式看一眼</p>
           </div>
@@ -265,7 +259,7 @@ export default function ThoughtRewriter() {
 
         {/* Brand footer */}
         {!result && !loading && (
-          <div className="brand-footer anim-rise anim-delay-7">
+          <div className="brand-footer anim-rise anim-delay-6">
             <a href="https://www.portaly.cc/twilightproject" target="_blank" rel="noopener noreferrer">
               微亮
             </a>
